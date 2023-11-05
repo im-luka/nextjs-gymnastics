@@ -1,3 +1,8 @@
 {
-  "appName": "Gymnasticum"
+  "appName": "Gymnasticum",
+  "metadata": {
+    "title": "Gymnasticum",
+    "template": "%s | Gymnasticum",
+    "description": "Manage your gymnastics competitions without a hitch."
+  }
 }
