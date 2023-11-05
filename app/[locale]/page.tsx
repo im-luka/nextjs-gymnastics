@@ -4,5 +4,9 @@ import { Title } from "@mantine/core";
 export default function HomePage() {
   const t = useTranslations();
 
-  return <Title order={2}>{t("appName")}</Title>;
+  return (
+    <Title order={2} c="red">
+      {t("appName")}
+    </Title>
+  );
 }

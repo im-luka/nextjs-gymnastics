@@ -1,3 +1,4 @@
+import "@mantine/core/styles.css";
 import { FC, ReactNode } from "react";
 import { MantineProvider, createTheme } from "@mantine/core";
 
