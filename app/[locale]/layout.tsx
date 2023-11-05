@@ -2,7 +2,9 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslator } from "next-intl/server";
+import { ColorSchemeScript } from "@mantine/core";
 import { LOCALES } from "@/util/constants";
+import { Providers } from "../_components/providers";
 
 type Params = { locale: string };
 type Props = { children: ReactNode; params: Params };
@@ -29,7 +31,12 @@ export default function RootLayout({ children, params: { locale } }: Props) {
 
   return (
     <html lang={locale}>
-      <body>{children}</body>
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

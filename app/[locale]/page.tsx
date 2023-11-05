@@ -1,7 +1,8 @@
 import { useTranslations } from "next-intl";
+import { Title } from "@mantine/core";
 
 export default function HomePage() {
   const t = useTranslations();
 
-  return <h1>{t("appName")}</h1>;
+  return <Title order={2}>{t("appName")}</Title>;
 }
