@@ -1,0 +1,5 @@
+.text-input {
+  &:focus {
+    border: 1px solid var(--mantine-color-primaryVariantJudge-5);
+  }
+}
