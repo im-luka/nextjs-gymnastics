@@ -8,6 +8,7 @@ import { Notifications } from "@mantine/notifications";
 import { colors } from "./colors";
 import { typography } from "./typography";
 import { spacing } from "./spacing";
+import { components } from "./components";
 import { other, resolver } from "./other";
 
 type Props = {
@@ -18,6 +19,7 @@ const theme = createTheme({
   ...colors,
   ...typography,
   spacing,
+  components,
   other,
 });
 
