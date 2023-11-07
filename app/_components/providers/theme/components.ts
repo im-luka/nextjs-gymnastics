@@ -1,4 +1,11 @@
-import { MantineThemeComponents, Text, TextInput, Title } from "@mantine/core";
+import {
+  Button,
+  MantineThemeComponents,
+  Text,
+  TextInput,
+  Title,
+  rem,
+} from "@mantine/core";
 
 export const components: MantineThemeComponents = {
   Text: Text.extend({
@@ -14,6 +21,17 @@ export const components: MantineThemeComponents = {
   TextInput: TextInput.extend({
     classNames: {
       input: "text-input",
+    },
+  }),
+  Button: Button.extend({
+    defaultProps: {
+      radius: rem(6),
+      size: "md",
+    },
+    styles: {
+      inner: {
+        gap: rem(6),
+      },
     },
   }),
 };

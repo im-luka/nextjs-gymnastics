@@ -11,6 +11,7 @@ export const other: MantineThemeOther = {
   colorBgError: "#ffebef",
   colorBgUpload: "#d0f7c6",
   colorBgSuccess: "#eefdea",
+  colorBgDisabled: "#eef1f4",
   colorDividerDark: "#38354d",
   colorDividerMedium: "#d6d5dc",
 };
@@ -27,6 +28,7 @@ export const resolver: CSSVariablesResolver = (theme) => ({
     "--mantine-color-bg-error": theme.other.colorBgError,
     "--mantine-color-bg-upload": theme.other.colorBgUpload,
     "--mantine-color-bg-success": theme.other.colorBgSuccess,
+    "--mantine-color-bg-disabled": theme.other.colorBgDisabled,
     "--mantine-color-divider-dark": theme.other.colorDividerDark,
     "--mantine-color-divider-medium": theme.other.colorDividerMedium,
   },
