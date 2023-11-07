@@ -34,7 +34,7 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
       <Notifications
         position="top-right"
         limit={3}
-        containerWidth={250}
+        containerWidth={300}
         transitionDuration={500}
       />
       {children}

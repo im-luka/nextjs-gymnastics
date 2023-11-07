@@ -37,7 +37,7 @@ function useQueryClientProvider() {
             onError: (error) => {
               let message;
               if (isAxiosError(error)) {
-                message = error.response?.data.message;
+                message = error.response?.data.message ?? error.message;
               } else if (error instanceof Error) {
                 message = error.message;
               } else {
