@@ -5,7 +5,7 @@ export default function HomePage() {
   const t = useTranslations();
 
   return (
-    <Title order={2} c="red">
+    <Title order={2} c="primary">
       {t("appName")}
     </Title>
   );

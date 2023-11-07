@@ -1,16 +1,29 @@
+"use client";
+
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import { FC, ReactNode } from "react";
 import { MantineProvider, createTheme } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
+import { colors } from "./colors";
+import { other, resolver } from "./other";
 
 type Props = {
   children: ReactNode;
 };
 
+const theme = createTheme({
+  ...colors,
+  other,
+});
+
 export const ThemeProvider: FC<Props> = ({ children }) => {
   return (
-    <MantineProvider defaultColorScheme="light">
+    <MantineProvider
+      theme={theme}
+      cssVariablesResolver={resolver}
+      defaultColorScheme="light"
+    >
       <Notifications
         position="top-right"
         limit={3}
