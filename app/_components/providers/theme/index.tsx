@@ -6,6 +6,7 @@ import { FC, ReactNode } from "react";
 import { MantineProvider, createTheme } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { colors } from "./colors";
+import { spacing } from "./spacing";
 import { other, resolver } from "./other";
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 
 const theme = createTheme({
   ...colors,
+  spacing,
   other,
 });
 
