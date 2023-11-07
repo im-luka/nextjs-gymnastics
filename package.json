@@ -12,6 +12,7 @@
     "@mantine/core": "^7.1.7",
     "@mantine/hooks": "^7.1.7",
     "@mantine/notifications": "^7.1.7",
+    "axios": "^1.6.0",
     "next": "14.0.1",
     "next-compose-plugins": "^2.2.1",
     "next-intl": "^3.0.0-rc.6",
