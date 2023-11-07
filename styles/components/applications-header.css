@@ -1,0 +1,12 @@
+.application-header {
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    height: 1px;
+    width: calc(100% - 40px);
+    background-color: var(--mantine-color-divider-medium);
+    transform: translateX(-50%);
+  }
+}

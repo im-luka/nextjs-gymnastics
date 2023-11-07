@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Image from "next/image";
 import { Breadcrumbs, Group, Text } from "@mantine/core";
-import { HEADER_CONTAINER_MAX_WIDTH } from "@/util/constants";
+import { CONTAINER_MAX_WIDTH } from "@/util/constants";
 import logo from "@/public/logo.svg";
 import { Link } from "../base/link";
 import { paths } from "@/navigation/paths";
@@ -14,7 +14,7 @@ export const Header: FC = () => {
 
   return (
     <header className="header">
-      <Group maw={HEADER_CONTAINER_MAX_WIDTH} mx="auto" justify="space-between">
+      <Group maw={CONTAINER_MAX_WIDTH} mx="auto" justify="space-between">
         <Group gap={40}>
           <Link href={paths.home()}>
             <Image src={logo} alt={t("header.logoAlt")} priority />

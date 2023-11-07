@@ -18,5 +18,14 @@
       "settings": "Settings",
       "logout": "Logout"
     }
+  },
+  "home": {
+    "applicationHeader": {
+      "title": "My Applications",
+      "action": {
+        "newApplication": "New application",
+        "open": "Open"
+      }
+    }
   }
 }
