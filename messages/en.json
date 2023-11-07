@@ -8,6 +8,14 @@
   "symbol": {
     "separator": "•"
   },
+  "notification": {
+    "success": {
+      "added": "Added!"
+    },
+    "error": {
+      "somethingWentWrong": "Something went wrong."
+    }
+  },
   "header": {
     "logoAlt": "Gymnasticum logo",
     "competitionName": "Competition name",
