@@ -20,7 +20,9 @@ export async function generateMetadata({
       template: t("template"),
       default: t("title"),
     },
+    metadataBase: new URL(process.env.WEB_URL!),
     description: t("description"),
+    manifest: "manifest.json",
   };
 }
 
