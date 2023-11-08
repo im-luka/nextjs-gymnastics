@@ -10,6 +10,8 @@ import { useTranslations } from "next-intl";
 import { isAxiosError } from "axios";
 import { notifications } from "@mantine/notifications";
 import { IconX } from "@tabler/icons-react";
+import { api } from "@/domain/remote";
+import { getAxiosData } from "@/domain/remote/response/data";
 
 type Props = {
   children: ReactNode;
@@ -33,6 +35,13 @@ function useQueryClientProvider() {
     () =>
       new QueryClient({
         defaultOptions: {
+          queries: {
+            retry: false,
+            queryFn: async ({ queryKey }) => {
+              const [path, params] = queryKey as [string, unknown];
+              return getAxiosData(await api.get(path, { params }));
+            },
+          },
           mutations: {
             onError: (error) => {
               let message;
