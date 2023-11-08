@@ -2,7 +2,8 @@
 @import "./global.css";
 @import "./utilities.css";
 
-/* PAGES */
+/* LAYOUTS & PAGES */
+@import "./layouts/home-layout.css";
 
 /* COMPONENTS */
 @import "./components/text-input.css";

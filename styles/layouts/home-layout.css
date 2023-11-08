@@ -1,0 +1,10 @@
+.home-layout {
+  width: 100%;
+  max-width: var(--mantine-width-container-max);
+  margin-inline: auto;
+  padding: rem(40);
+  display: flex;
+  flex-direction: column;
+  gap: rem(40);
+  flex: 1;
+}

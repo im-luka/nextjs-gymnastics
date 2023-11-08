@@ -28,11 +28,19 @@
     }
   },
   "home": {
-    "applicationHeader": {
-      "title": "My Applications",
-      "action": {
-        "newApplication": "New application",
-        "open": "Open"
+    "applications": {
+      "header": {
+        "title": "My Applications",
+        "action": {
+          "newApplication": "New application",
+          "open": "Open"
+        }
+      },
+      "emptyPlaceholder": {
+        "imgAlt": "Icon of ghost describing that the list is empty",
+        "title": "No applications yet",
+        "description": "List of your requests will appear here when you add gymnasts.",
+        "applyAction": "Apply gymnasts"
       }
     }
   }

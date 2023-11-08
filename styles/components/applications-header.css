@@ -5,7 +5,7 @@
     bottom: -1px;
     left: 50%;
     height: 1px;
-    width: calc(100% - 40px);
+    width: 100%;
     background-color: var(--mantine-color-divider-medium);
     transform: translateX(-50%);
   }
