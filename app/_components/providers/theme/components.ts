@@ -38,19 +38,10 @@ export const components: MantineThemeComponents = {
   Table: Table.extend({
     defaultProps: {
       withRowBorders: false,
-      withColumnBorders: false,
-      highlightOnHover: true,
-      striped: "even",
-      stripedColor: "var(--mantine-color-table-row)",
       verticalSpacing: "sm",
       horizontalSpacing: "lg",
     },
     styles: {
-      table: {
-        outline: ".5px solid var(--mantine-color-divider-medium)",
-        borderRadius: rem(8),
-        overflow: "hidden",
-      },
       th: {
         paddingBlock: "var(--mantine-spacing-md)",
         color: "var(--mantine-color-textPrimary-8)",
