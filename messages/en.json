@@ -56,7 +56,9 @@
           "declined": "Declined",
           "canceled": "Canceled",
           "awaitingresponse": "Awaiting response"
-        }
+        },
+        "dateOfBirth": "<s>Date of birth:</s> {value}",
+        "phoneNumber": "<s>Phone number:</s> {value}"
       }
     }
   }

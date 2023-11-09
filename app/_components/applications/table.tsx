@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const Table: FC<Props> = (props) => {
-  const { applications, countMessage, columns } = useTable(props);
+  const { t, applications, countMessage, columns } = useTable(props);
 
   return (
     <Stack gap={12}>
@@ -24,17 +24,37 @@ export const Table: FC<Props> = (props) => {
         stripedColor="var(--mantine-color-table-row)"
         withTableBorder
         borderRadius="lg"
-        highlightOnHover
         records={applications}
         columns={columns}
-        // execute this callback when a row is clicked
-        // onRowClick={({ record: { name, party, bornIn } }) =>
-        //   showNotification({
-        //     title: `Clicked on ${name}`,
-        //     message: `You clicked on ${name}, a ${party.toLowerCase()} president born in ${bornIn}`,
-        //     withBorder: true,
-        //   })
-        // }
+        rowExpansion={{
+          allowMultiple: true,
+          content: ({ record: { dateOfBirth, phone } }) => (
+            <Stack w="100%" p="xl" align="center">
+              <Stack gap={4}>
+                <Text size="xs" c="textPrimary.8">
+                  {t.rich("dateOfBirth", {
+                    s: (chunk) => (
+                      <Text span fw={700}>
+                        {chunk}
+                      </Text>
+                    ),
+                    value: formatDate(dateOfBirth, "withDateAndTime"),
+                  })}
+                </Text>
+                <Text size="xs" c="textPrimary.8">
+                  {t.rich("phoneNumber", {
+                    s: (chunk) => (
+                      <Text span fw={700}>
+                        {chunk}
+                      </Text>
+                    ),
+                    value: phone,
+                  })}
+                </Text>
+              </Stack>
+            </Stack>
+          ),
+        }}
       />
     </Stack>
   );
@@ -116,5 +136,5 @@ function useTable({ applications }: Props) {
     },
   ];
 
-  return { applications, countMessage, columns };
+  return { t, applications, countMessage, columns };
 }
