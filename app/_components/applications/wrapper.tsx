@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Application } from "@/types/application";
 import { applicationsQuery } from "@/domain/queries/applications-query";
 import axios from "axios";
@@ -11,6 +11,7 @@ import { Stack } from "@mantine/core";
 import { SearchFilters } from "./search-filters";
 import { Table } from "./table";
 import db from "@/db.json";
+import { useSearchParams } from "next/navigation";
 
 export const Wrapper: FC = () => {
   const { applications } = useApplicationsWrapper();
@@ -28,16 +29,28 @@ export const Wrapper: FC = () => {
 };
 
 function useApplicationsWrapper() {
+  const searchParams = useSearchParams();
+  console.log(searchParams);
+
   // TODO: Fetch real API
-  const { data, isLoading } = useQuery<Application[]>({
-    queryKey: applicationsQuery.key,
-    queryFn: () =>
-      axios
-        .get("https://jsonplaceholder.typicode.com/posts")
-        .then(getAxiosData),
+  // const { data, isLoading } = useQuery<Application[]>({
+  //   queryKey: applicationsQuery.key,
+  //   queryFn: () =>
+  //     axios
+  //       .get("https://jsonplaceholder.typicode.com/posts")
+  //       .then(getAxiosData),
+  // });
+
+  const qc = useQueryClient();
+
+  qc.setQueryData(applicationsQuery.key, () => {
+    return db;
   });
 
-  const applications = db as Application[];
+  const applications = qc.getQueryData<Application[]>(applicationsQuery.key);
+  // console.log(applications);
+
+  // const applications = db as Application[];
 
   return { applications };
 }

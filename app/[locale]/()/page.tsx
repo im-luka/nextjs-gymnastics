@@ -5,17 +5,26 @@ import { getQueryClient } from "@/domain/queries/server-query-client";
 import { getAxiosData } from "@/domain/remote/response/data";
 import { Wrapper } from "@/app/_components/applications/wrapper";
 
+type Props = {
+  params: {
+    locale: string;
+  };
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+};
+
 // TODO: Prefetch real data
 
-export default async function HomePage() {
+export default async function HomePage(props: Props) {
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: applicationsQuery.key,
-    queryFn: () =>
-      axios
-        .get("https://jsonplaceholder.typicode.com/posts")
-        .then(getAxiosData),
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: applicationsQuery.key,
+  //   queryFn: () =>
+  //     axios
+  //       .get("https://jsonplaceholder.typicode.com/posts")
+  //       .then(getAxiosData),
+  // });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -59,6 +59,15 @@
         },
         "dateOfBirth": "<s>Date of birth:</s> {value}",
         "phoneNumber": "<s>Phone number:</s> {value}"
+      },
+      "filter": {
+        "emptyPlaceholder": "All",
+        "value": {
+          "discipline": "Discipline:",
+          "programName": "Program:",
+          "categoryName": "Category:",
+          "status": "Status:"
+        }
       }
     }
   }
