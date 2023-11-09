@@ -29,7 +29,7 @@ export const Table: FC<Props> = (props) => {
         rowExpansion={{
           allowMultiple: true,
           content: ({ record: { dateOfBirth, phone } }) => (
-            <Stack w="100%" p="xl" align="center">
+            <Stack w="100%" p="lg" align="center">
               <Stack gap={4}>
                 <Text size="xs" c="textPrimary.8">
                   {t.rich("dateOfBirth", {
