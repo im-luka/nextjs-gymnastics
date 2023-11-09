@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 const DATE_FORMAT = {
   default: "",
   withLongMonth: "MMMM DD, YYYY",
+  withDateAndTime: "DD.mm.YYYY. hh:mm",
 };
 
 export const formatDate = (

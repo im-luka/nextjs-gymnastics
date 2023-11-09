@@ -15,7 +15,10 @@ export const other: MantineThemeOther = {
   colorBgDisabled: "#eef1f4",
   colorDividerDark: "#38354d",
   colorDividerMedium: "#d6d5dc",
-  widthContainerMax: CONTAINER_MAX_WIDTH,
+  colorBgSecondaryIos: "#efeff1",
+  colorTableRow: "#fafafa",
+  colorTableHeader: "#eae9ef",
+  widthContainerMax: `${CONTAINER_MAX_WIDTH}px`,
 };
 
 export const resolver: CSSVariablesResolver = (theme) => ({
@@ -33,6 +36,9 @@ export const resolver: CSSVariablesResolver = (theme) => ({
     "--mantine-color-bg-disabled": theme.other.colorBgDisabled,
     "--mantine-color-divider-dark": theme.other.colorDividerDark,
     "--mantine-color-divider-medium": theme.other.colorDividerMedium,
+    "--mantine-color-bg-secondary-ios": theme.other.colorBgSecondaryIos,
+    "--mantine-color-table-row": theme.other.colorTableRow,
+    "--mantine-color-table-header": theme.other.colorTableHeader,
     "--mantine-width-container-max": theme.other.widthContainerMax,
   },
   dark: {},

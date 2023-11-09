@@ -1,6 +1,7 @@
 import {
   Button,
   MantineThemeComponents,
+  Table,
   Text,
   TextInput,
   Title,
@@ -31,6 +32,29 @@ export const components: MantineThemeComponents = {
     styles: {
       inner: {
         gap: rem(6),
+      },
+    },
+  }),
+  Table: Table.extend({
+    defaultProps: {
+      withRowBorders: false,
+      withColumnBorders: false,
+      highlightOnHover: true,
+      striped: "even",
+      stripedColor: "var(--mantine-color-table-row)",
+      verticalSpacing: "sm",
+      horizontalSpacing: "lg",
+    },
+    styles: {
+      table: {
+        outline: ".5px solid var(--mantine-color-divider-medium)",
+        borderRadius: rem(8),
+        overflow: "hidden",
+      },
+      th: {
+        paddingBlock: "var(--mantine-spacing-md)",
+        color: "var(--mantine-color-textPrimary-8)",
+        backgroundColor: "var(--mantine-color-table-header)",
       },
     },
   }),

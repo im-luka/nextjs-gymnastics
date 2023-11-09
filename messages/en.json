@@ -41,6 +41,22 @@
         "title": "No applications yet",
         "description": "List of your requests will appear here when you add gymnasts.",
         "applyAction": "Apply gymnasts"
+      },
+      "table": {
+        "requestsCount": "All requests ({count})",
+        "name": "Name",
+        "discipline": "Discipline",
+        "program": "Program",
+        "category": "Category",
+        "team": "Team",
+        "statusLabel": "Status",
+        "date": "Date",
+        "status": {
+          "applied": "Applied",
+          "declined": "Declined",
+          "canceled": "Canceled",
+          "awaitingresponse": "Awaiting response"
+        }
       }
     }
   }

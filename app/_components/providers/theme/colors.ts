@@ -100,7 +100,7 @@ export const colors: ColorsType = {
       "#b2b2b8",
       "#7f8188",
       "#72747b",
-      "#60636b",
+      "#72747e",
       "#505561",
     ],
   },

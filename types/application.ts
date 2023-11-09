@@ -1,4 +1,4 @@
-enum Status {
+export enum Status {
   Applied = "applied",
   Declined = "declined",
   Canceled = "canceled",
