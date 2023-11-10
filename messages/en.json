@@ -16,6 +16,11 @@
       "somethingWentWrong": "Something went wrong."
     }
   },
+  "modal": {
+    "application": {
+      "title": "Apply gymnast"
+    }
+  },
   "header": {
     "logoAlt": "Gymnasticum logo",
     "competitionName": "Competition name",

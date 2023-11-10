@@ -7,14 +7,17 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { applicationsQuery } from "@/domain/queries/applications-query";
 import { Application } from "@/types/application";
 import db from "@/db.json";
+import { ApplicationModal } from "../modals/application-modal";
+import { useDisclosure } from "@mantine/hooks";
 
 export const Actions: FC = () => {
-  const { t, handleRefetch, handleClear } = useQueryActions();
+  const { t, isModalOpen, openModal, closeModal, handleRefetch, handleClear } =
+    useQueryActions();
 
   return (
     <Stack align="flex-end">
       <Group>
-        <Button>{t("newApplication")}</Button>
+        <Button onClick={openModal}>{t("newApplication")}</Button>
         <Button
           c="black"
           bg="var(--mantine-color-bg-disabled)"
@@ -31,6 +34,11 @@ export const Actions: FC = () => {
           {t("clear")}
         </Button>
       </Group>
+      <ApplicationModal
+        opened={isModalOpen}
+        onClose={closeModal}
+        onSubmit={() => console.log("subbed")}
+      />
     </Stack>
   );
 };
@@ -38,6 +46,8 @@ export const Actions: FC = () => {
 function useQueryActions() {
   const t = useTranslations("home.applications.header.action");
   const qc = useQueryClient();
+  const [isModalOpen, { open: openModal, close: closeModal }] =
+    useDisclosure(false);
 
   const { refetch } = useQuery({
     queryKey: applicationsQuery.key,
@@ -48,5 +58,5 @@ function useQueryActions() {
 
   const handleClear = () => qc.setQueryData(applicationsQuery.key, () => []);
 
-  return { t, handleRefetch, handleClear };
+  return { t, isModalOpen, openModal, closeModal, handleRefetch, handleClear };
 }
