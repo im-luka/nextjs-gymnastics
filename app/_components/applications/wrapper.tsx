@@ -11,18 +11,19 @@ import { Table } from "./table";
 import db from "@/db.json";
 import { useSearchParams } from "next/navigation";
 import { filterWithParams } from "@/util/applications";
+import { isEmpty } from "lodash";
 
 export const Wrapper: FC = () => {
-  const { applications } = useApplicationsWrapper();
+  const { applications, showEmptyPlaceholder } = useApplicationsWrapper();
 
-  if (!applications?.length) {
+  if (showEmptyPlaceholder) {
     return <EmptyPlaceholder />;
   }
 
   return (
     <Stack h="100%" gap="lg">
       <SearchFilters />
-      <Table applications={applications} />
+      <Table applications={applications ?? []} />
     </Stack>
   );
 };
@@ -38,5 +39,7 @@ function useApplicationsWrapper() {
     select: filterWithParams(filters),
   });
 
-  return { applications };
+  const showEmptyPlaceholder = !applications?.length && isEmpty(filters);
+
+  return { applications, showEmptyPlaceholder };
 }

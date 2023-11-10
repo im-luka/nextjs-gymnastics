@@ -43,6 +43,7 @@
         "applyAction": "Apply gymnasts"
       },
       "table": {
+        "emptyPlaceholder": "No requests found. Try adjusting filters.",
         "requestsCount": "All requests ({count})",
         "name": "Name",
         "discipline": "Discipline",

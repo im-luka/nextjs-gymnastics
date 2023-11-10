@@ -1,13 +1,13 @@
 "use client";
 
 import { FC } from "react";
+import { useTranslations } from "next-intl";
 import { Stack, Text, Title } from "@mantine/core";
 import { DataTable, DataTableColumn } from "mantine-datatable";
+import { IconChevronDown, IconMoodEmpty } from "@tabler/icons-react";
 import { Application } from "@/types/application";
-import { useTranslations } from "next-intl";
-import { StatusBadge } from "./status-badge";
 import { formatDate } from "@/util/date";
-import { IconChevronDown } from "@tabler/icons-react";
+import { StatusBadge } from "./status-badge";
 
 type Props = {
   applications: Application[];
@@ -26,6 +26,13 @@ export const Table: FC<Props> = (props) => {
         borderRadius="lg"
         records={applications}
         columns={columns}
+        minHeight={!applications.length ? 250 : "auto"}
+        emptyState={
+          <Stack gap="sm" align="center">
+            <IconMoodEmpty size={48} />
+            <Text size="lg">{t("emptyPlaceholder")}</Text>
+          </Stack>
+        }
         rowExpansion={{
           allowMultiple: true,
           content: ({ record: { dateOfBirth, phone } }) => (

@@ -36,7 +36,6 @@ function useQueryClientProvider() {
       new QueryClient({
         defaultOptions: {
           queries: {
-            retry: false,
             queryFn: async ({ queryKey }) => {
               const [path, params] = queryKey as [string, unknown];
               return getAxiosData(await api.get(path, { params }));
