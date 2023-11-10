@@ -1,6 +1,7 @@
 import {
   Button,
   MantineThemeComponents,
+  Modal,
   Table,
   Text,
   TextInput,
@@ -20,6 +21,12 @@ export const components: MantineThemeComponents = {
     },
   }),
   TextInput: TextInput.extend({
+    styles: {
+      label: {
+        fontSize: "var(--mantine-font-size-xs)",
+        color: "var(--mantine-color-textPrimary-8)",
+      },
+    },
     classNames: {
       input: "text-input",
     },
@@ -46,6 +53,21 @@ export const components: MantineThemeComponents = {
         paddingBlock: "var(--mantine-spacing-md)",
         color: "var(--mantine-color-textPrimary-8)",
         backgroundColor: "var(--mantine-color-table-header)",
+      },
+    },
+  }),
+  Modal: Modal.extend({
+    defaultProps: {
+      withCloseButton: false,
+      radius: "md",
+    },
+    styles: {
+      body: {
+        paddingBlock: "var(--mantine-spacing-lg)",
+        paddingInline: rem(40),
+      },
+      content: {
+        minWidth: rem(640),
       },
     },
   }),

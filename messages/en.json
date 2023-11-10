@@ -18,7 +18,24 @@
   },
   "modal": {
     "application": {
-      "title": "Apply gymnast"
+      "title": "Apply gymnast",
+      "firstNameLabel": "First name",
+      "firstNamePlaceholder": "Enter name",
+      "lastNameLabel": "Last name",
+      "lastNamePlaceholder": "Enter last name",
+      "countryLabel": "Country",
+      "programAndCategoryLabel": "Program and category",
+      "dateOfBirthLabel": "Date of birth",
+      "dateOfBirthPlaceholder": "Enter date",
+      "clubLabel": "Club (optional)",
+      "clubPlaceholder": "Enter club name",
+      "teamLabel": "Team (optional)",
+      "teamPlaceholder": "Team name",
+      "phoneLabel": "Phone (optional)",
+      "phonePlaceholder": "Phone Number",
+      "phoneLeftSection": "+385",
+      "cancelAction": "Cancel",
+      "saveAction": "Save"
     }
   },
   "header": {
