@@ -19,4 +19,5 @@ export type Application = {
   programName: string;
   status: Status;
   teamName: string;
+  [key: string]: string | Date;
 };

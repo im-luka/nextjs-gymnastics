@@ -1,4 +1,6 @@
 import { FC, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   Box,
@@ -11,12 +13,10 @@ import {
   Text,
   useCombobox,
 } from "@mantine/core";
-import { Application } from "@/types/application";
 import { IconChevronDown } from "@tabler/icons-react";
 import { uniq } from "lodash";
-import { useSearchParams } from "next/navigation";
+import { Application } from "@/types/application";
 import { usePathname, useRouter } from "@/navigation";
-import { useTranslations } from "next-intl";
 import { applicationsQuery } from "@/domain/queries/applications-query";
 
 type Props = {
