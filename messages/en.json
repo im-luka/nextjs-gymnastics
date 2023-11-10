@@ -33,7 +33,9 @@
         "title": "My Applications",
         "action": {
           "newApplication": "New application",
-          "open": "Open"
+          "open": "Open",
+          "refetch": "Refetch",
+          "clear": "Clear"
         }
       },
       "emptyPlaceholder": {

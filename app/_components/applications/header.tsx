@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { Button, Group, Indicator, Title } from "@mantine/core";
 import { useTranslations } from "next-intl";
+import { Group, Title } from "@mantine/core";
+import { Actions } from "./actions";
 
 export const Header: FC = () => {
   const { t } = useApplicationHeader();
@@ -10,19 +11,11 @@ export const Header: FC = () => {
       pos="relative"
       pb={40}
       justify="space-between"
+      align="flex-start"
       className="application-header"
     >
       <Title>{t("title")}</Title>
-      <Group>
-        <Button>{t("action.newApplication")}</Button>
-        <Button
-          c="black"
-          bg="var(--mantine-color-bg-disabled)"
-          leftSection={<Indicator color="green" />}
-        >
-          {t("action.open")}
-        </Button>
-      </Group>
+      <Actions />
     </Group>
   );
 };
