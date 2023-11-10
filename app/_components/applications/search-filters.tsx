@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "@/navigation";
 import { SEARCH_FILTER } from "@/types/filters";
 import { Filter } from "./filter";
 import { useTranslations } from "next-intl";
+import { debounce } from "lodash";
 
 export const SearchFilters: FC = () => {
   const { t, handleSearch, defaultValue } = useSearchFilters();
@@ -35,8 +36,9 @@ function useSearchFilters() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = debounce((e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    console.log(value);
     const params = new URLSearchParams(searchParams);
     if (value) {
       params.set(SEARCH_FILTER, value);
@@ -44,7 +46,7 @@ function useSearchFilters() {
       params.delete(SEARCH_FILTER);
     }
     replace(`${pathname}?${params.toString()}`);
-  };
+  }, 200);
 
   const defaultValue = searchParams.get(SEARCH_FILTER)?.toString();
 
