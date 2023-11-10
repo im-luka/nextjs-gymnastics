@@ -38,6 +38,7 @@
         "title": "My Applications",
         "action": {
           "newApplication": "New application",
+          "applyNew": "Apply new",
           "open": "Open"
         }
       },

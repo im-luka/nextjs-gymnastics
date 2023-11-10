@@ -12,7 +12,9 @@ export const Actions: FC = () => {
   return (
     <Stack align="flex-end">
       <Group>
-        <Button onClick={openModal}>{t("newApplication")}</Button>
+        <Button onClick={openModal}>
+          {isModalOpen ? t("applyNew") : t("newApplication")}
+        </Button>
         <Button
           c="black"
           bg="var(--mantine-color-bg-disabled)"
