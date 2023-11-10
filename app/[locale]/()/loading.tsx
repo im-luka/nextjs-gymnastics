@@ -1,5 +1,9 @@
-import { Title } from "@mantine/core";
+import { Center, Loader } from "@mantine/core";
 
 export default function Loading() {
-  return <Title fz={250}>Loading...</Title>;
+  return (
+    <Center h="100%">
+      <Loader size="xl" />;
+    </Center>
+  );
 }

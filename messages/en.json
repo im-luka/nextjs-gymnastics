@@ -38,16 +38,15 @@
         "title": "My Applications",
         "action": {
           "newApplication": "New application",
-          "open": "Open",
-          "refetch": "Refetch",
-          "clear": "Clear"
+          "open": "Open"
         }
       },
       "emptyPlaceholder": {
         "imgAlt": "Icon of ghost describing that the list is empty",
         "title": "No applications yet",
         "description": "List of your requests will appear here when you add gymnasts.",
-        "applyAction": "Apply gymnasts"
+        "applyAction": "Apply gymnasts",
+        "refetchAction": "Refetch"
       },
       "table": {
         "emptyPlaceholder": "No requests found. Try adjusting filters.",
@@ -71,6 +70,8 @@
       "filter": {
         "emptyPlaceholder": "All",
         "searchPlaceholder": "Search gymnasts",
+        "refetch": "Refetch",
+        "delete": "Delete all",
         "value": {
           "discipline": "Discipline:",
           "programName": "Program:",
