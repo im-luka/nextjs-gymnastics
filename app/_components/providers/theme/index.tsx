@@ -1,9 +1,10 @@
 "use client";
 
+import { FC, ReactNode } from "react";
 import "@mantine/core/styles.css";
+import "mantine-datatable/styles.css";
 import "@mantine/notifications/styles.css";
 import "@/styles/index.css";
-import { FC, ReactNode } from "react";
 import { MantineProvider, createTheme } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { colors } from "./colors";
@@ -34,7 +35,7 @@ export const ThemeProvider: FC<Props> = ({ children }) => {
       <Notifications
         position="top-right"
         limit={3}
-        containerWidth={250}
+        containerWidth={300}
         transitionDuration={500}
       />
       {children}

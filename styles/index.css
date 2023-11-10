@@ -2,10 +2,12 @@
 @import "./global.css";
 @import "./utilities.css";
 
-/* PAGES */
+/* LAYOUTS & PAGES */
+@import "./layouts/home-layout.css";
 
 /* COMPONENTS */
 @import "./components/text-input.css";
 @import "./components/header.css";
 @import "./components/user-menu.css";
 @import "./components/applications-header.css";
+@import "./components/filter.css";

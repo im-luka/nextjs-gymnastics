@@ -8,6 +8,14 @@
   "symbol": {
     "separator": "•"
   },
+  "notification": {
+    "success": {
+      "added": "Added!"
+    },
+    "error": {
+      "somethingWentWrong": "Something went wrong."
+    }
+  },
   "header": {
     "logoAlt": "Gymnasticum logo",
     "competitionName": "Competition name",
@@ -20,11 +28,48 @@
     }
   },
   "home": {
-    "applicationHeader": {
-      "title": "My Applications",
-      "action": {
-        "newApplication": "New application",
-        "open": "Open"
+    "applications": {
+      "header": {
+        "title": "My Applications",
+        "action": {
+          "newApplication": "New application",
+          "open": "Open"
+        }
+      },
+      "emptyPlaceholder": {
+        "imgAlt": "Icon of ghost describing that the list is empty",
+        "title": "No applications yet",
+        "description": "List of your requests will appear here when you add gymnasts.",
+        "applyAction": "Apply gymnasts"
+      },
+      "table": {
+        "emptyPlaceholder": "No requests found. Try adjusting filters.",
+        "requestsCount": "All requests ({count})",
+        "name": "Name",
+        "discipline": "Discipline",
+        "program": "Program",
+        "category": "Category",
+        "team": "Team",
+        "statusLabel": "Status",
+        "date": "Date",
+        "status": {
+          "applied": "Applied",
+          "declined": "Declined",
+          "canceled": "Canceled",
+          "awaitingresponse": "Awaiting response"
+        },
+        "dateOfBirth": "<s>Date of birth:</s> {value}",
+        "phoneNumber": "<s>Phone number:</s> {value}"
+      },
+      "filter": {
+        "emptyPlaceholder": "All",
+        "searchPlaceholder": "Search gymnasts",
+        "value": {
+          "discipline": "Discipline:",
+          "programName": "Program:",
+          "categoryName": "Category:",
+          "status": "Status:"
+        }
       }
     }
   }

@@ -2,13 +2,13 @@ import { FC } from "react";
 import { Button, Group, Indicator, Title } from "@mantine/core";
 import { useTranslations } from "next-intl";
 
-export const ApplicationsHeader: FC = () => {
+export const Header: FC = () => {
   const { t } = useApplicationHeader();
 
   return (
     <Group
       pos="relative"
-      p={40}
+      pb={40}
       justify="space-between"
       className="application-header"
     >
@@ -28,7 +28,7 @@ export const ApplicationsHeader: FC = () => {
 };
 
 function useApplicationHeader() {
-  const t = useTranslations("home.applicationHeader");
+  const t = useTranslations("home.applications.header");
 
   return { t };
 }

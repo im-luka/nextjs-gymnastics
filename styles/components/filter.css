@@ -1,0 +1,7 @@
+.filter {
+  &-target {
+    display: flex;
+    gap: rem(6);
+    cursor: pointer;
+  }
+}

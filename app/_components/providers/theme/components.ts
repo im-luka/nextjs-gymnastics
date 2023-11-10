@@ -1,6 +1,7 @@
 import {
   Button,
   MantineThemeComponents,
+  Table,
   Text,
   TextInput,
   Title,
@@ -31,6 +32,20 @@ export const components: MantineThemeComponents = {
     styles: {
       inner: {
         gap: rem(6),
+      },
+    },
+  }),
+  Table: Table.extend({
+    defaultProps: {
+      withRowBorders: false,
+      verticalSpacing: "sm",
+      horizontalSpacing: "lg",
+    },
+    styles: {
+      th: {
+        paddingBlock: "var(--mantine-spacing-md)",
+        color: "var(--mantine-color-textPrimary-8)",
+        backgroundColor: "var(--mantine-color-table-header)",
       },
     },
   }),

@@ -1,3 +1,5 @@
-.user-menu__avatar {
-  border-radius: 100%;
+.user-menu {
+  &__avatar {
+    border-radius: 100%;
+  }
 }

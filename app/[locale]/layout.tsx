@@ -37,7 +37,7 @@ export default function RootLayout({ children, params: { locale } }: Props) {
         <ColorSchemeScript />
       </head>
       <body>
-        <Providers>{children}</Providers>
+        <Providers locale={locale}>{children}</Providers>
       </body>
     </html>
   );
