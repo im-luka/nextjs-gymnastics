@@ -63,6 +63,7 @@
       },
       "filter": {
         "emptyPlaceholder": "All",
+        "searchPlaceholder": "Search gymnasts",
         "value": {
           "discipline": "Discipline:",
           "programName": "Program:",

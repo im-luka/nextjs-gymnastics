@@ -18,12 +18,10 @@ import { uniq } from "lodash";
 import { Application } from "@/types/application";
 import { usePathname, useRouter } from "@/navigation";
 import { applicationsQuery } from "@/domain/queries/applications-query";
+import { Filters } from "@/types/filters";
 
 type Props = {
-  type: keyof Pick<
-    Application,
-    "discipline" | "programName" | "categoryName" | "status"
-  >;
+  type: Exclude<Filters, "search">;
 };
 
 export const Filter: FC<Props> = (props) => {

@@ -12,6 +12,7 @@ import db from "@/db.json";
 import { useSearchParams } from "next/navigation";
 import { filterWithParams } from "@/util/applications";
 import { isEmpty } from "lodash";
+import { Filters } from "@/types/filters";
 
 export const Wrapper: FC = () => {
   const { applications, showEmptyPlaceholder } = useApplicationsWrapper();
@@ -30,16 +31,20 @@ export const Wrapper: FC = () => {
 
 function useApplicationsWrapper() {
   const searchParams = useSearchParams();
-  const filters = Object.fromEntries(searchParams.entries());
+  const paramsFilters: Partial<Record<Filters, string>> = Object.fromEntries(
+    searchParams.entries()
+  );
+
+  const filters = filterWithParams(paramsFilters);
 
   // TODO: Fetch real API
   const { data: applications } = useQuery<Application[]>({
     queryKey: applicationsQuery.key,
     queryFn: () => db as Application[],
-    select: filterWithParams(filters),
+    select: filterWithParams(paramsFilters),
   });
 
-  const showEmptyPlaceholder = !applications?.length && isEmpty(filters);
+  const showEmptyPlaceholder = !applications?.length && isEmpty(paramsFilters);
 
   return { applications, showEmptyPlaceholder };
 }
