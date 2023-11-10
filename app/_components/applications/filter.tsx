@@ -48,7 +48,7 @@ export const Filter: FC<Props> = (props) => {
           </Group>
         </Box>
       </ComboboxTarget>
-      <ComboboxDropdown miw={225}>
+      <ComboboxDropdown miw={175}>
         <ComboboxOptions>
           {filterValues.map((value) => (
             <ComboboxOption key={value} value={value}>
