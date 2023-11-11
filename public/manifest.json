@@ -3,7 +3,7 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
-  "start_url": "http://localhost:3000/",
+  "start_url": "https://nextjs-gymnastics.vercel.app/",
   "name": "Gymnasticum",
   "short_name": "GYMNS",
   "description": "Manage your gymnastics competitions without a hitch.",
