@@ -23,6 +23,19 @@ export async function generateMetadata({
     metadataBase: new URL(process.env.WEB_URL!),
     description: t("description"),
     manifest: "manifest.json",
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      images: [{ url: "images/cover-image.png" }],
+      locale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: t("title"),
+      description: t("description"),
+      images: [{ url: "images/cover-image.png" }],
+    },
   };
 }
 
