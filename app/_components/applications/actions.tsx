@@ -1,35 +1,19 @@
 "use client";
 
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Group, Indicator, Stack } from "@mantine/core";
-import {
-  ApplicationFormValues,
-  ApplicationModal,
-  ApplicationModalRef,
-} from "../modals/application-modal";
-import { useDisclosure } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
-import { applicationMutation } from "@/domain/mutations/application-mutation";
-import { ApplicationData } from "@/domain/types/application-data";
-import { Status } from "@/types/application";
-import { useNotificationSuccess } from "@/hooks/use-notification-success";
+import { ApplicationModal } from "../modals/application-modal";
+import { useApplicationModal } from "@/hooks/use-application-modal";
 
 export const Actions: FC = () => {
-  const {
-    t,
-    applicationModalRef,
-    isModalOpen,
-    openModal,
-    closeModal,
-    handleSubmit,
-  } = useQueryActions();
+  const { t, modalRef, isOpen, open, close, handleSubmit } = useQueryActions();
 
   return (
     <Stack align="flex-end">
       <Group>
-        <Button onClick={openModal}>
-          {isModalOpen ? t("applyNew") : t("newApplication")}
+        <Button onClick={open}>
+          {isOpen ? t("applyNew") : t("newApplication")}
         </Button>
         <Button
           c="black"
@@ -40,9 +24,9 @@ export const Actions: FC = () => {
         </Button>
       </Group>
       <ApplicationModal
-        ref={applicationModalRef}
-        opened={isModalOpen}
-        onClose={closeModal}
+        ref={modalRef}
+        opened={isOpen}
+        onClose={close}
         onSubmit={handleSubmit}
       />
     </Stack>
@@ -51,44 +35,7 @@ export const Actions: FC = () => {
 
 function useQueryActions() {
   const t = useTranslations("home.applications.header.action");
-  const applicationModalRef = useRef<ApplicationModalRef>(null);
-  const onSuccess = useNotificationSuccess("added");
-  const [isModalOpen, { open: openModal, close: closeModal }] =
-    useDisclosure(false);
+  const { modalRef, isOpen, open, close, handleSubmit } = useApplicationModal();
 
-  const { mutateAsync: addApplication } = useMutation({
-    mutationFn: applicationMutation.fnc,
-    onSuccess: () => {
-      onSuccess();
-      closeModal();
-      applicationModalRef.current?.resetForm();
-    },
-  });
-
-  const handleSubmit = async ({
-    dateOfBirth,
-    programAndCategoryName,
-    ...restValues
-  }: ApplicationFormValues) => {
-    const [programName, categoryName] = programAndCategoryName.split(" - ");
-    const data: ApplicationData = {
-      ...restValues,
-      programName,
-      categoryName,
-      dateOfBirth: dateOfBirth.toString(),
-      date: new Date().toString(),
-      status: Status.AwaitingResponse,
-      discipline: "",
-    };
-    await addApplication(data).catch(() => null);
-  };
-
-  return {
-    t,
-    applicationModalRef,
-    isModalOpen,
-    openModal,
-    closeModal,
-    handleSubmit,
-  };
+  return { t, modalRef, isOpen, open, close, handleSubmit };
 }
