@@ -29,7 +29,9 @@ import { useQuery } from "@tanstack/react-query";
 import { countriesQuery } from "@/domain/queries/countries-query";
 import { Application } from "@/types/application";
 import { applicationsQuery } from "@/domain/queries/applications-query";
-import { flatMap, map, uniq, unzip } from "lodash";
+import { flatMap, map } from "lodash";
+import { extractProgramsAndCategories } from "@/util/applications";
+import { getCountryCode, getCountryPhoneCode } from "@/util/countries";
 
 type AutocompleteOption = {
   label: string;
@@ -127,7 +129,7 @@ export const ApplicationModal: FC<Props> = (props) => {
               </GridCol>
               <GridCol span={8} mt="sm">
                 <FormTextInput
-                  name="team"
+                  name="teamName"
                   label={t("teamLabel")}
                   placeholder={t("teamPlaceholder")}
                 />
@@ -187,26 +189,23 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
       country: "",
       programAndCategoryName: "",
       dateOfBirth: undefined,
-      club: undefined,
-      teamName: undefined,
-      phone: undefined,
+      club: "",
+      teamName: "",
+      phone: "",
     },
   });
   const {
-    handleSubmit,
+    handleSubmit: formHandleSubmit,
     clearErrors,
     formState: { isSubmitting },
   } = applicationForm;
 
   const programAndCategoryOptions: AutocompleteOption[] = (() => {
-    const [programs, categories] = unzip(
-      applications?.map((application) => [
-        application.programName,
-        application.categoryName,
-      ])
+    const [programs, categories] = extractProgramsAndCategories(
+      applications ?? []
     );
-    return flatMap(uniq(programs), (program) =>
-      map(uniq(categories), (category) => ({
+    return flatMap(programs, (program) =>
+      map(categories, (category) => ({
         label: `${program} - ${category}`,
         value: `${program} - ${category}`,
       }))
@@ -223,8 +222,7 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
     setPhonePlaceholder(
       label
         ? t("phoneLeftSection", {
-            phone: countries?.find((c) => c.flag === label.split(" ")[0])
-              ?.phoneCode,
+            phone: getCountryPhoneCode(countries, label),
           })
         : ""
     );
@@ -233,6 +231,13 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
   const handleClose = () => {
     onClose();
     clearErrors();
+  };
+
+  const handleSubmit = async ({
+    country,
+    ...values
+  }: ApplicationFormValues) => {
+    await onSubmit({ ...values, country: getCountryCode(countries, country) });
   };
 
   return {
@@ -245,7 +250,7 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
     countryOptions,
     handleCountryChange,
     onClose: handleClose,
-    onSubmit: handleSubmit(onSubmit),
+    onSubmit: formHandleSubmit(handleSubmit),
   };
 }
 
