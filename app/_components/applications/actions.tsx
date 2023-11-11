@@ -8,9 +8,12 @@ import {
   ApplicationModal,
 } from "../modals/application-modal";
 import { useDisclosure } from "@mantine/hooks";
+import { useQuery } from "@tanstack/react-query";
+import { countriesQuery } from "@/domain/queries/countries-query";
+import { Country } from "@/types/country";
 
 export const Actions: FC = () => {
-  const { t, isModalOpen, openModal, closeModal, handleSubmit } =
+  const { t, isModalOpen, countries, openModal, closeModal, handleSubmit } =
     useQueryActions();
 
   return (
@@ -31,6 +34,7 @@ export const Actions: FC = () => {
         opened={isModalOpen}
         onClose={closeModal}
         onSubmit={handleSubmit}
+        countries={countries ?? []}
       />
     </Stack>
   );
@@ -41,9 +45,13 @@ function useQueryActions() {
   const [isModalOpen, { open: openModal, close: closeModal }] =
     useDisclosure(false);
 
+  const { data: countries } = useQuery<Country[]>({
+    queryKey: countriesQuery.key,
+  });
+
   const handleSubmit = async (values: ApplicationFormValues) => {
     await console.log(values);
   };
 
-  return { t, isModalOpen, openModal, closeModal, handleSubmit };
+  return { t, isModalOpen, countries, openModal, closeModal, handleSubmit };
 }

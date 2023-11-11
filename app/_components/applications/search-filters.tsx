@@ -7,11 +7,13 @@ import { SEARCH_FILTER } from "@/types/filters";
 import { Filter } from "./filter";
 import { useTranslations } from "next-intl";
 import { debounce } from "lodash";
-import { applicationsQuery } from "@/domain/queries/applications-query";
-import { useQueryClient } from "@tanstack/react-query";
 
-export const SearchFilters: FC = () => {
-  const { t, handleSearch, handleClear, defaultValue } = useSearchFilters();
+type Props = {
+  clearQuery: VoidFunction;
+};
+
+export const SearchFilters: FC<Props> = (props) => {
+  const { t, clearQuery, handleSearch, defaultValue } = useSearchFilters(props);
 
   return (
     <Group justify="space-between">
@@ -30,16 +32,15 @@ export const SearchFilters: FC = () => {
           <Filter type="status" />
         </Group>
       </Group>
-      <Button variant="subtle" size="compact-sm" onClick={handleClear}>
+      <Button variant="subtle" size="compact-sm" onClick={clearQuery}>
         {t("delete")}
       </Button>
     </Group>
   );
 };
 
-function useSearchFilters() {
+function useSearchFilters({ clearQuery }: Props) {
   const t = useTranslations("home.applications.filter");
-  const qc = useQueryClient();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -55,12 +56,7 @@ function useSearchFilters() {
     replace(`${pathname}?${params.toString()}`);
   }, 200);
 
-  const handleClear = () => {
-    replace(pathname);
-    qc.setQueryData(applicationsQuery.key, () => []);
-  };
-
   const defaultValue = searchParams.get(SEARCH_FILTER)?.toString();
 
-  return { t, handleSearch, handleClear, defaultValue };
+  return { t, clearQuery, handleSearch, defaultValue };
 }

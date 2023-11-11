@@ -1,6 +1,11 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useTranslations } from "next-intl";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  FormProvider,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ActionIcon,
@@ -15,18 +20,35 @@ import {
   rem,
 } from "@mantine/core";
 import { z } from "zod";
-import { IconX } from "@tabler/icons-react";
+import { IconChevronDown, IconX } from "@tabler/icons-react";
 import { FormTextInput } from "../base/text-input";
+import { Country } from "@/types/country";
+import { FormAutocomplete } from "../base/autocomplete";
+
+type CountryOption = {
+  label: string;
+  value: string;
+};
 
 type Props = {
   opened: boolean;
   onClose: VoidFunction;
   onSubmit: SubmitHandler<ApplicationFormValues>;
+  countries: Country[];
 };
 
 export const ApplicationModal: FC<Props> = (props) => {
-  const { t, opened, applicationForm, isSubmitting, onClose, onSubmit } =
-    useApplicationModal(props);
+  const {
+    t,
+    opened,
+    applicationForm,
+    isSubmitting,
+    phonePlaceholder,
+    countryOptions,
+    handleCountryChange,
+    onClose,
+    onSubmit,
+  } = useApplicationModal(props);
 
   return (
     <Modal opened={opened} onClose={onClose} centered>
@@ -41,64 +63,77 @@ export const ApplicationModal: FC<Props> = (props) => {
                 <IconX />
               </ActionIcon>
             </Group>
-            <Grid gutter="sm">
-              <GridCol span={5} mt="sm">
+            <Grid gutter="sm" columns={16}>
+              <GridCol span={6} mt="sm">
                 <FormTextInput
                   name="firstName"
                   label={t("firstNameLabel")}
                   placeholder={t("firstNamePlaceholder")}
                 />
               </GridCol>
-              <GridCol span={5} mt="sm">
+              <GridCol span={6} mt="sm">
                 <FormTextInput
                   name="lastName"
                   label={t("lastNameLabel")}
                   placeholder={t("lastNamePlaceholder")}
                 />
               </GridCol>
-              <GridCol span={2} mt="sm">
-                <FormTextInput
+              <GridCol span={4} mt="sm">
+                <Controller
                   name="country"
-                  label={t("countryLabel")}
-                  placeholder={t("countryLabel")}
+                  render={({ field }) => (
+                    <FormAutocomplete
+                      name="country"
+                      label={t("countryLabel")}
+                      placeholder={t("countryLabel")}
+                      data={countryOptions}
+                      rightSection={<IconChevronDown size={16} />}
+                      onChange={(label) => {
+                        field.onChange(label);
+                        handleCountryChange(label);
+                      }}
+                    />
+                  )}
                 />
               </GridCol>
-              <GridCol span={9} mt="sm">
+              <GridCol span={11} mt="sm">
                 <FormTextInput
                   name="programAndCategoryName"
                   label={t("programAndCategoryLabel")}
                   placeholder={t("programAndCategoryLabel")}
                 />
               </GridCol>
-              <GridCol span={3} mt="sm">
+              <GridCol span={5} mt="sm">
                 <FormTextInput
                   name="dateOfBirth"
                   label={t("dateOfBirthLabel")}
                   placeholder={t("dateOfBirthPlaceholder")}
                 />
               </GridCol>
-              <GridCol span={6} mt="sm">
+              <GridCol span={8} mt="sm">
                 <FormTextInput
                   name="club"
                   label={t("clubLabel")}
                   placeholder={t("clubPlaceholder")}
                 />
               </GridCol>
-              <GridCol span={6} mt="sm">
+              <GridCol span={8} mt="sm">
                 <FormTextInput
                   name="team"
                   label={t("teamLabel")}
                   placeholder={t("teamPlaceholder")}
                 />
               </GridCol>
-              <GridCol span={4} mt="sm">
+              <GridCol span={6} mt="sm">
                 <FormTextInput
                   name="phone"
                   label={t("phoneLabel")}
                   placeholder={t("phonePlaceholder")}
-                  leftSection={<Text size="xs">{t("phoneLeftSection")}</Text>}
+                  leftSection={<Text size="xs">{phonePlaceholder}</Text>}
                   styles={{
-                    input: { paddingLeft: rem(36) },
+                    input: {
+                      paddingLeft: phonePlaceholder ? rem(40) : rem(12),
+                    },
                   }}
                 />
               </GridCol>
@@ -124,11 +159,13 @@ export const ApplicationModal: FC<Props> = (props) => {
   );
 };
 
-function useApplicationModal({ opened, onClose, onSubmit }: Props) {
+function useApplicationModal({ opened, onClose, onSubmit, countries }: Props) {
   const t = useTranslations("modal.application");
+  const [phonePlaceholder, setPhonePlaceholder] = useState("");
 
+  const tValidation = useTranslations("validation");
   const applicationForm = useForm<ApplicationFormValues>({
-    resolver: zodResolver(applicationSchema),
+    resolver: zodResolver(applicationSchema(tValidation("required"))),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -146,6 +183,24 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
     formState: { isSubmitting },
   } = applicationForm;
 
+  const countryOptions: CountryOption[] = countries.map(
+    ({ code, flag, name }) => ({
+      value: code,
+      label: `${flag} ${name}`,
+    })
+  );
+
+  const handleCountryChange = (label: string) => {
+    setPhonePlaceholder(
+      label
+        ? t("phoneLeftSection", {
+            phone: countries.find((c) => c.flag === label.split(" ")[0])
+              ?.phoneCode,
+          })
+        : ""
+    );
+  };
+
   const handleClose = () => {
     onClose();
     clearErrors();
@@ -156,19 +211,25 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
     opened,
     applicationForm,
     isSubmitting,
+    phonePlaceholder,
+    countryOptions,
+    handleCountryChange,
     onClose: handleClose,
     onSubmit: handleSubmit(onSubmit),
   };
 }
 
-export type ApplicationFormValues = z.infer<typeof applicationSchema>;
-const applicationSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  country: z.string().min(1),
-  programAndCategoryName: z.string().min(1),
-  dateOfBirth: z.string().min(1),
-  club: z.string().optional(),
-  teamName: z.string().optional(),
-  phone: z.string().optional(),
-});
+export type ApplicationFormValues = z.infer<
+  ReturnType<typeof applicationSchema>
+>;
+const applicationSchema = (requiredMsg: string) =>
+  z.object({
+    firstName: z.string().min(1, requiredMsg),
+    lastName: z.string().min(1, requiredMsg),
+    country: z.string().min(1, requiredMsg),
+    programAndCategoryName: z.string().min(1, requiredMsg),
+    dateOfBirth: z.string().min(1, requiredMsg),
+    club: z.string().optional(),
+    teamName: z.string().optional(),
+    phone: z.string().optional(),
+  });

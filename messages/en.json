@@ -16,6 +16,9 @@
       "somethingWentWrong": "Something went wrong."
     }
   },
+  "validation": {
+    "required": "Required"
+  },
   "modal": {
     "application": {
       "title": "Apply gymnast",
@@ -33,7 +36,7 @@
       "teamPlaceholder": "Team name",
       "phoneLabel": "Phone (optional)",
       "phonePlaceholder": "Phone Number",
-      "phoneLeftSection": "+385",
+      "phoneLeftSection": "+{phone}",
       "cancelAction": "Cancel",
       "saveAction": "Save"
     }
