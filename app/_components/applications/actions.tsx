@@ -80,7 +80,7 @@ function useQueryActions() {
       status: Status.AwaitingResponse,
       discipline: "",
     };
-    await addApplication(data);
+    await addApplication(data).catch(() => null);
   };
 
   return {
