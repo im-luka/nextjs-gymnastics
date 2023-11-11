@@ -8,6 +8,10 @@ import {
   ApplicationModal,
 } from "../modals/application-modal";
 import { useDisclosure } from "@mantine/hooks";
+import { useMutation } from "@tanstack/react-query";
+import { applicationMutation } from "@/domain/mutations/application-mutation";
+import { ApplicationData } from "@/domain/types/application-data";
+import { Status } from "@/types/application";
 
 export const Actions: FC = () => {
   const { t, isModalOpen, openModal, closeModal, handleSubmit } =
@@ -41,8 +45,26 @@ function useQueryActions() {
   const [isModalOpen, { open: openModal, close: closeModal }] =
     useDisclosure(false);
 
-  const handleSubmit = async (values: ApplicationFormValues) => {
-    await console.log(values);
+  const { mutateAsync: addApplication } = useMutation({
+    mutationFn: applicationMutation.fnc,
+  });
+
+  const handleSubmit = async ({
+    dateOfBirth,
+    programAndCategoryName,
+    ...restValues
+  }: ApplicationFormValues) => {
+    const [programName, categoryName] = programAndCategoryName.split(" - ");
+    const data: ApplicationData = {
+      ...restValues,
+      programName,
+      categoryName,
+      dateOfBirth: dateOfBirth.toString(),
+      date: new Date().toString(),
+      status: Status.AwaitingResponse,
+      discipline: "",
+    };
+    await addApplication(data);
   };
 
   return { t, isModalOpen, openModal, closeModal, handleSubmit };

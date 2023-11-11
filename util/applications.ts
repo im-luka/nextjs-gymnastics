@@ -12,7 +12,7 @@ export const filterWithParams =
             application.lastName.toLowerCase().includes(value)
           );
         }
-        return application[key].toString().includes(value);
+        return (application as any)[key].toString().includes(value);
       })
     );
 

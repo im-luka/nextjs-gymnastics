@@ -264,7 +264,7 @@ const applicationSchema = (requiredMsg: string) =>
     country: z.string().min(1, requiredMsg),
     programAndCategoryName: z.string().min(1, requiredMsg),
     dateOfBirth: z.date(),
-    club: z.string().optional(),
-    teamName: z.string().optional(),
-    phone: z.string().optional(),
+    club: z.string(),
+    teamName: z.string(),
+    phone: z.string(),
   });
