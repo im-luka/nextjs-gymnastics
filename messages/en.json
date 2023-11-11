@@ -16,6 +16,31 @@
       "somethingWentWrong": "Something went wrong."
     }
   },
+  "validation": {
+    "required": "Required"
+  },
+  "modal": {
+    "application": {
+      "title": "Apply gymnast",
+      "firstNameLabel": "First name",
+      "firstNamePlaceholder": "Enter name",
+      "lastNameLabel": "Last name",
+      "lastNamePlaceholder": "Enter last name",
+      "countryLabel": "Country",
+      "programAndCategoryLabel": "Program and category",
+      "dateOfBirthLabel": "Date of birth",
+      "dateOfBirthPlaceholder": "Enter date",
+      "clubLabel": "Club (optional)",
+      "clubPlaceholder": "Enter club name",
+      "teamLabel": "Team (optional)",
+      "teamPlaceholder": "Team name",
+      "phoneLabel": "Phone (optional)",
+      "phonePlaceholder": "Phone Number",
+      "phoneLeftSection": "+{phone}",
+      "cancelAction": "Cancel",
+      "saveAction": "Save"
+    }
+  },
   "header": {
     "logoAlt": "Gymnasticum logo",
     "competitionName": "Competition name",
@@ -33,6 +58,7 @@
         "title": "My Applications",
         "action": {
           "newApplication": "New application",
+          "applyNew": "Apply new",
           "open": "Open"
         }
       },
@@ -40,7 +66,8 @@
         "imgAlt": "Icon of ghost describing that the list is empty",
         "title": "No applications yet",
         "description": "List of your requests will appear here when you add gymnasts.",
-        "applyAction": "Apply gymnasts"
+        "applyAction": "Apply gymnasts",
+        "refetchAction": "Refetch"
       },
       "table": {
         "emptyPlaceholder": "No requests found. Try adjusting filters.",
@@ -64,6 +91,8 @@
       "filter": {
         "emptyPlaceholder": "All",
         "searchPlaceholder": "Search gymnasts",
+        "refetch": "Refetch",
+        "delete": "Delete all",
         "value": {
           "discipline": "Discipline:",
           "programName": "Program:",

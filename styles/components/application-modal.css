@@ -1,0 +1,5 @@
+.application-modal {
+  &__actions-block {
+    border-top: 1px solid var(--mantine-color-divider-medium);
+  }
+}
