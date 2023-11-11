@@ -25,8 +25,13 @@ import { FormTextInput } from "../base/text-input";
 import { Country } from "@/types/country";
 import { FormAutocomplete } from "../base/autocomplete";
 import { FormDateInput } from "../base/date-input";
+import { useQuery } from "@tanstack/react-query";
+import { countriesQuery } from "@/domain/queries/countries-query";
+import { Application } from "@/types/application";
+import { applicationsQuery } from "@/domain/queries/applications-query";
+import { flatMap, map, uniq, unzip } from "lodash";
 
-type CountryOption = {
+type AutocompleteOption = {
   label: string;
   value: string;
 };
@@ -35,7 +40,6 @@ type Props = {
   opened: boolean;
   onClose: VoidFunction;
   onSubmit: SubmitHandler<ApplicationFormValues>;
-  countries: Country[];
 };
 
 export const ApplicationModal: FC<Props> = (props) => {
@@ -45,6 +49,7 @@ export const ApplicationModal: FC<Props> = (props) => {
     applicationForm,
     isSubmitting,
     phonePlaceholder,
+    programAndCategoryOptions,
     countryOptions,
     handleCountryChange,
     onClose,
@@ -98,10 +103,12 @@ export const ApplicationModal: FC<Props> = (props) => {
                 />
               </GridCol>
               <GridCol span={11} mt="sm">
-                <FormTextInput
+                <FormAutocomplete
                   name="programAndCategoryName"
                   label={t("programAndCategoryLabel")}
                   placeholder={t("programAndCategoryLabel")}
+                  data={programAndCategoryOptions}
+                  rightSection={<IconChevronDown size={16} />}
                 />
               </GridCol>
               <GridCol span={5} mt="sm">
@@ -110,11 +117,6 @@ export const ApplicationModal: FC<Props> = (props) => {
                   label={t("dateOfBirthLabel")}
                   placeholder={t("dateOfBirthPlaceholder")}
                 />
-                {/* <FormTextInput
-                  name="dateOfBirth"
-                  label={t("dateOfBirthLabel")}
-                  placeholder={t("dateOfBirthPlaceholder")}
-                /> */}
               </GridCol>
               <GridCol span={8} mt="sm">
                 <FormTextInput
@@ -165,9 +167,16 @@ export const ApplicationModal: FC<Props> = (props) => {
   );
 };
 
-function useApplicationModal({ opened, onClose, onSubmit, countries }: Props) {
+function useApplicationModal({ opened, onClose, onSubmit }: Props) {
   const t = useTranslations("modal.application");
   const [phonePlaceholder, setPhonePlaceholder] = useState("");
+
+  const { data: applications } = useQuery<Application[]>({
+    queryKey: applicationsQuery.key,
+  });
+  const { data: countries } = useQuery<Country[]>({
+    queryKey: countriesQuery.key,
+  });
 
   const tValidation = useTranslations("validation");
   const applicationForm = useForm<ApplicationFormValues>({
@@ -189,18 +198,32 @@ function useApplicationModal({ opened, onClose, onSubmit, countries }: Props) {
     formState: { isSubmitting },
   } = applicationForm;
 
-  const countryOptions: CountryOption[] = countries.map(
-    ({ code, flag, name }) => ({
+  const programAndCategoryOptions: AutocompleteOption[] = (() => {
+    const [programs, categories] = unzip(
+      applications?.map((application) => [
+        application.programName,
+        application.categoryName,
+      ])
+    );
+    return flatMap(uniq(programs), (program) =>
+      map(uniq(categories), (category) => ({
+        label: `${program} - ${category}`,
+        value: `${program} - ${category}`,
+      }))
+    );
+  })();
+
+  const countryOptions: AutocompleteOption[] =
+    countries?.map(({ code, flag, name }) => ({
       value: code,
       label: `${flag} ${name}`,
-    })
-  );
+    })) ?? [];
 
   const handleCountryChange = (label: string) => {
     setPhonePlaceholder(
       label
         ? t("phoneLeftSection", {
-            phone: countries.find((c) => c.flag === label.split(" ")[0])
+            phone: countries?.find((c) => c.flag === label.split(" ")[0])
               ?.phoneCode,
           })
         : ""
@@ -218,6 +241,7 @@ function useApplicationModal({ opened, onClose, onSubmit, countries }: Props) {
     applicationForm,
     isSubmitting,
     phonePlaceholder,
+    programAndCategoryOptions,
     countryOptions,
     handleCountryChange,
     onClose: handleClose,
