@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { ForwardedRef, forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   Controller,
@@ -23,7 +23,7 @@ import { z } from "zod";
 import { IconChevronDown, IconX } from "@tabler/icons-react";
 import { FormTextInput } from "../base/text-input";
 import { Country } from "@/types/country";
-import { FormAutocomplete } from "../base/autocomplete";
+import { AutocompleteOption, FormAutocomplete } from "../base/autocomplete";
 import { FormDateInput } from "../base/date-input";
 import { useQuery } from "@tanstack/react-query";
 import { countriesQuery } from "@/domain/queries/countries-query";
@@ -33,9 +33,8 @@ import { flatMap, map } from "lodash";
 import { extractProgramsAndCategories } from "@/util/applications";
 import { getCountryCode, getCountryPhoneCode } from "@/util/countries";
 
-type AutocompleteOption = {
-  label: string;
-  value: string;
+export type ApplicationModalRef = {
+  resetForm: VoidFunction;
 };
 
 type Props = {
@@ -44,132 +43,137 @@ type Props = {
   onSubmit: SubmitHandler<ApplicationFormValues>;
 };
 
-export const ApplicationModal: FC<Props> = (props) => {
-  const {
-    t,
-    opened,
-    applicationForm,
-    isSubmitting,
-    phonePlaceholder,
-    programAndCategoryOptions,
-    countryOptions,
-    handleCountryChange,
-    onClose,
-    onSubmit,
-  } = useApplicationModal(props);
+export const ApplicationModal = forwardRef<ApplicationModalRef, Props>(
+  function ApplicationModal(props, ref) {
+    const {
+      t,
+      opened,
+      applicationForm,
+      isSubmitting,
+      phonePlaceholder,
+      programAndCategoryOptions,
+      countryOptions,
+      handleCountryChange,
+      onClose,
+      onSubmit,
+    } = useApplicationModal(props, ref);
 
-  return (
-    <Modal opened={opened} onClose={onClose} centered>
-      <FormProvider {...applicationForm}>
-        <form onSubmit={onSubmit}>
-          <Stack gap={40}>
-            <Group justify="space-between">
-              <Title order={2} c="textPrimary.8">
-                {t("title")}
-              </Title>
-              <ActionIcon variant="white" onClick={onClose} c="black">
-                <IconX />
-              </ActionIcon>
-            </Group>
-            <Grid gutter="sm" columns={16}>
-              <GridCol span={6} mt="sm">
-                <FormTextInput
-                  name="firstName"
-                  label={t("firstNameLabel")}
-                  placeholder={t("firstNamePlaceholder")}
-                />
-              </GridCol>
-              <GridCol span={6} mt="sm">
-                <FormTextInput
-                  name="lastName"
-                  label={t("lastNameLabel")}
-                  placeholder={t("lastNamePlaceholder")}
-                />
-              </GridCol>
-              <GridCol span={4} mt="sm">
-                <Controller
-                  name="country"
-                  render={({ field }) => (
-                    <FormAutocomplete
-                      name="country"
-                      label={t("countryLabel")}
-                      placeholder={t("countryLabel")}
-                      data={countryOptions}
-                      rightSection={<IconChevronDown size={16} />}
-                      onChange={(label) => {
-                        field.onChange(label);
-                        handleCountryChange(label);
-                      }}
-                    />
-                  )}
-                />
-              </GridCol>
-              <GridCol span={11} mt="sm">
-                <FormAutocomplete
-                  name="programAndCategoryName"
-                  label={t("programAndCategoryLabel")}
-                  placeholder={t("programAndCategoryLabel")}
-                  data={programAndCategoryOptions}
-                  rightSection={<IconChevronDown size={16} />}
-                />
-              </GridCol>
-              <GridCol span={5} mt="sm">
-                <FormDateInput
-                  name="dateOfBirth"
-                  label={t("dateOfBirthLabel")}
-                  placeholder={t("dateOfBirthPlaceholder")}
-                />
-              </GridCol>
-              <GridCol span={8} mt="sm">
-                <FormTextInput
-                  name="club"
-                  label={t("clubLabel")}
-                  placeholder={t("clubPlaceholder")}
-                />
-              </GridCol>
-              <GridCol span={8} mt="sm">
-                <FormTextInput
-                  name="teamName"
-                  label={t("teamLabel")}
-                  placeholder={t("teamPlaceholder")}
-                />
-              </GridCol>
-              <GridCol span={6} mt="sm">
-                <FormTextInput
-                  name="phone"
-                  label={t("phoneLabel")}
-                  placeholder={t("phonePlaceholder")}
-                  leftSection={<Text size="xs">{phonePlaceholder}</Text>}
-                  styles={{
-                    input: {
-                      paddingLeft: phonePlaceholder ? rem(40) : rem(12),
-                    },
-                  }}
-                />
-              </GridCol>
-            </Grid>
-            <Group
-              justify="flex-end"
-              pt="md"
-              className="application-modal__actions-block"
-            >
-              <Group gap="lg">
-                <Text className="underline cursor-pointer" onClick={onClose}>
-                  {t("cancelAction")}
-                </Text>
-                <Button type="submit" loading={isSubmitting}>
-                  {t("saveAction")}
-                </Button>
+    return (
+      <Modal opened={opened} onClose={onClose} centered>
+        <FormProvider {...applicationForm}>
+          <form onSubmit={onSubmit}>
+            <Stack gap={40}>
+              <Group justify="space-between">
+                <Title order={2} c="textPrimary.8">
+                  {t("title")}
+                </Title>
+                <ActionIcon variant="white" onClick={onClose} c="black">
+                  <IconX />
+                </ActionIcon>
               </Group>
-            </Group>
-          </Stack>
-        </form>
-      </FormProvider>
-    </Modal>
-  );
-};
+              <Grid gutter="sm" columns={16}>
+                <GridCol span={6} mt="sm">
+                  <FormTextInput
+                    name="firstName"
+                    label={t("firstNameLabel")}
+                    placeholder={t("firstNamePlaceholder")}
+                  />
+                </GridCol>
+                <GridCol span={6} mt="sm">
+                  <FormTextInput
+                    name="lastName"
+                    label={t("lastNameLabel")}
+                    placeholder={t("lastNamePlaceholder")}
+                  />
+                </GridCol>
+                <GridCol span={4} mt="sm">
+                  <Controller
+                    name="country"
+                    render={({ field }) => (
+                      <FormAutocomplete
+                        name="country"
+                        label={t("countryLabel")}
+                        placeholder={t("countryLabel")}
+                        data={countryOptions}
+                        rightSection={<IconChevronDown size={16} />}
+                        onChange={(label) => {
+                          field.onChange(label);
+                          handleCountryChange(label);
+                        }}
+                      />
+                    )}
+                  />
+                </GridCol>
+                <GridCol span={11} mt="sm">
+                  <FormAutocomplete
+                    name="programAndCategoryName"
+                    label={t("programAndCategoryLabel")}
+                    placeholder={t("programAndCategoryLabel")}
+                    data={programAndCategoryOptions}
+                    rightSection={<IconChevronDown size={16} />}
+                  />
+                </GridCol>
+                <GridCol span={5} mt="sm">
+                  <FormDateInput
+                    name="dateOfBirth"
+                    label={t("dateOfBirthLabel")}
+                    placeholder={t("dateOfBirthPlaceholder")}
+                  />
+                </GridCol>
+                <GridCol span={8} mt="sm">
+                  <FormTextInput
+                    name="club"
+                    label={t("clubLabel")}
+                    placeholder={t("clubPlaceholder")}
+                  />
+                </GridCol>
+                <GridCol span={8} mt="sm">
+                  <FormTextInput
+                    name="teamName"
+                    label={t("teamLabel")}
+                    placeholder={t("teamPlaceholder")}
+                  />
+                </GridCol>
+                <GridCol span={6} mt="sm">
+                  <FormTextInput
+                    name="phone"
+                    label={t("phoneLabel")}
+                    placeholder={t("phonePlaceholder")}
+                    leftSection={<Text size="xs">{phonePlaceholder}</Text>}
+                    styles={{
+                      input: {
+                        paddingLeft: phonePlaceholder ? rem(40) : rem(12),
+                      },
+                    }}
+                  />
+                </GridCol>
+              </Grid>
+              <Group
+                justify="flex-end"
+                pt="md"
+                className="application-modal__actions-block"
+              >
+                <Group gap="lg">
+                  <Text className="underline cursor-pointer" onClick={onClose}>
+                    {t("cancelAction")}
+                  </Text>
+                  <Button type="submit" loading={isSubmitting}>
+                    {t("saveAction")}
+                  </Button>
+                </Group>
+              </Group>
+            </Stack>
+          </form>
+        </FormProvider>
+      </Modal>
+    );
+  }
+);
 
-function useApplicationModal({ opened, onClose, onSubmit }: Props) {
+function useApplicationModal(
+  { opened, onClose, onSubmit }: Props,
+  ref: ForwardedRef<ApplicationModalRef>
+) {
   const t = useTranslations("modal.application");
   const [phonePlaceholder, setPhonePlaceholder] = useState("");
 
@@ -197,6 +201,7 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
   const {
     handleSubmit: formHandleSubmit,
     clearErrors,
+    reset,
     formState: { isSubmitting },
   } = applicationForm;
 
@@ -235,10 +240,24 @@ function useApplicationModal({ opened, onClose, onSubmit }: Props) {
 
   const handleSubmit = async ({
     country,
+    phone,
     ...values
   }: ApplicationFormValues) => {
-    await onSubmit({ ...values, country: getCountryCode(countries, country) });
+    const phoneNumber = phone ? `${phonePlaceholder}${phone}` : "";
+    await onSubmit({
+      ...values,
+      phone: phoneNumber,
+      country: getCountryCode(countries, country),
+    });
   };
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      resetForm: reset,
+    }),
+    [reset]
+  );
 
   return {
     t,

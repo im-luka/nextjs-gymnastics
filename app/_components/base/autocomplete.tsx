@@ -2,6 +2,11 @@ import { FC } from "react";
 import { Autocomplete, AutocompleteProps } from "@mantine/core";
 import { useController } from "react-hook-form";
 
+export type AutocompleteOption = {
+  label: string;
+  value: string;
+};
+
 type Props = AutocompleteProps & {
   name: string;
 };

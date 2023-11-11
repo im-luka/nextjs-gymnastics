@@ -1,21 +1,29 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Group, Indicator, Stack } from "@mantine/core";
 import {
   ApplicationFormValues,
   ApplicationModal,
+  ApplicationModalRef,
 } from "../modals/application-modal";
 import { useDisclosure } from "@mantine/hooks";
 import { useMutation } from "@tanstack/react-query";
 import { applicationMutation } from "@/domain/mutations/application-mutation";
 import { ApplicationData } from "@/domain/types/application-data";
 import { Status } from "@/types/application";
+import { useNotificationSuccess } from "@/hooks/use-notification-success";
 
 export const Actions: FC = () => {
-  const { t, isModalOpen, openModal, closeModal, handleSubmit } =
-    useQueryActions();
+  const {
+    t,
+    applicationModalRef,
+    isModalOpen,
+    openModal,
+    closeModal,
+    handleSubmit,
+  } = useQueryActions();
 
   return (
     <Stack align="flex-end">
@@ -32,6 +40,7 @@ export const Actions: FC = () => {
         </Button>
       </Group>
       <ApplicationModal
+        ref={applicationModalRef}
         opened={isModalOpen}
         onClose={closeModal}
         onSubmit={handleSubmit}
@@ -42,11 +51,18 @@ export const Actions: FC = () => {
 
 function useQueryActions() {
   const t = useTranslations("home.applications.header.action");
+  const applicationModalRef = useRef<ApplicationModalRef>(null);
+  const onSuccess = useNotificationSuccess("added");
   const [isModalOpen, { open: openModal, close: closeModal }] =
     useDisclosure(false);
 
   const { mutateAsync: addApplication } = useMutation({
     mutationFn: applicationMutation.fnc,
+    onSuccess: () => {
+      onSuccess();
+      closeModal();
+      applicationModalRef.current?.resetForm();
+    },
   });
 
   const handleSubmit = async ({
@@ -67,5 +83,12 @@ function useQueryActions() {
     await addApplication(data);
   };
 
-  return { t, isModalOpen, openModal, closeModal, handleSubmit };
+  return {
+    t,
+    applicationModalRef,
+    isModalOpen,
+    openModal,
+    closeModal,
+    handleSubmit,
+  };
 }
