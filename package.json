@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
     "@mantine/core": "^7.1.7",
+    "@mantine/dates": "^7.1.7",
     "@mantine/hooks": "^7.1.7",
     "@mantine/notifications": "^7.1.7",
     "@tabler/icons-react": "^2.40.0",

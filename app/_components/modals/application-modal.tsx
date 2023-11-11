@@ -24,6 +24,7 @@ import { IconChevronDown, IconX } from "@tabler/icons-react";
 import { FormTextInput } from "../base/text-input";
 import { Country } from "@/types/country";
 import { FormAutocomplete } from "../base/autocomplete";
+import { FormDateInput } from "../base/date-input";
 
 type CountryOption = {
   label: string;
@@ -104,11 +105,16 @@ export const ApplicationModal: FC<Props> = (props) => {
                 />
               </GridCol>
               <GridCol span={5} mt="sm">
-                <FormTextInput
+                <FormDateInput
                   name="dateOfBirth"
                   label={t("dateOfBirthLabel")}
                   placeholder={t("dateOfBirthPlaceholder")}
                 />
+                {/* <FormTextInput
+                  name="dateOfBirth"
+                  label={t("dateOfBirthLabel")}
+                  placeholder={t("dateOfBirthPlaceholder")}
+                /> */}
               </GridCol>
               <GridCol span={8} mt="sm">
                 <FormTextInput
@@ -171,7 +177,7 @@ function useApplicationModal({ opened, onClose, onSubmit, countries }: Props) {
       lastName: "",
       country: "",
       programAndCategoryName: "",
-      dateOfBirth: "",
+      dateOfBirth: undefined,
       club: undefined,
       teamName: undefined,
       phone: undefined,
@@ -228,7 +234,7 @@ const applicationSchema = (requiredMsg: string) =>
     lastName: z.string().min(1, requiredMsg),
     country: z.string().min(1, requiredMsg),
     programAndCategoryName: z.string().min(1, requiredMsg),
-    dateOfBirth: z.string().min(1, requiredMsg),
+    dateOfBirth: z.date(),
     club: z.string().optional(),
     teamName: z.string().optional(),
     phone: z.string().optional(),
